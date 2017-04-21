@@ -1,15 +1,35 @@
 .button-view {
-  border: 5px solid black;
+  background-color: #424242;
+  color: white;
+  border-radius: 10px;
+  width: 80px;
+  height: 70px;
+  float: left;
+  margin: 10px 19px;
+  font-size: 40px;
 }
 
-.red {
+.AC, .CE {
   background: red;
 }
 
 .zero {
+  width: 198px;
   background: blue;
 }
 
 .equal {
+  position: relative;
+  bottom: 90px;
+  height: 160px;
+  align-self: flex-end;
   background: green;
+}
+
+.zero, .AC, .\31, .\34, .\37 {
+  margin-left: 0;
+}
+
+.equal, .\2a, .\2d, .\2b {
+  margin-right: 0;
 }

@@ -5,7 +5,8 @@ import '../styles/CalculatorView.scss'
 import EquationDisplay from '../../EquationDisplay/components/EquationDisplayView'
 import Button from '../../Button/components/ButtonView'
 
-const buttons = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'AC', 'CE', '/', '*', '-', '+', '=']
+// const buttons = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'AC', 'CE', '/', '*', '-', '+', '=', '.']
+const buttons = ['AC', 'CE', '/', '*', 7, 8, 9, '-', 4, 5, 6, '+', 1, 2, 3, 0, '.', '=']
 
 export const Calculator = (props) => (
   <div id='calculator'>
