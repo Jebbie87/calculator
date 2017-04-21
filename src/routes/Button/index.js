@@ -9,16 +9,16 @@ export default (store) => ({
     require.ensure([], (require) => {
       /*  Webpack - use require callback to define
           dependencies for bundling   */
-      const Calculator = require('./containers/CalculatorContainer').default
-      const reducer = require('./modules/calculator').default
+      const Button = require('./containers/ButtonContainer').default
+      const reducer = require('./modules/button').default
 
-      /*  Add the reducer to the store on key 'calculator'  */
-      injectReducer(store, { key: 'calculator', reducer })
+      /*  Add the reducer to the store on key 'button'  */
+      injectReducer(store, { key: 'button', reducer })
 
       /*  Return getComponent   */
-      cb(null, Calculator)
+      cb(null, Button)
 
     /* Webpack named bundle   */
-    }, 'calculator')
+    }, 'button')
   }
 })

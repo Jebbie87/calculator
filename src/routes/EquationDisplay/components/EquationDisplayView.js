@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import '../styles/EquationDisplayView.scss'
 
-export const Calculator = (props) => (
-  <div className='equation-display border'>
+export const Equation = (props) => (
+  <div className='equation-display'>
     <h3>9</h3>
-    <p>9*9</p>
+    <p>11*333=81</p>
   </div>
 )
 
-Calculator.propTypes = {
+Equation.propTypes = {
 
 }
 
-export default Calculator
+export default Equation
