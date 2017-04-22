@@ -5,15 +5,14 @@ import '../styles/CalculatorView.scss'
 import EquationDisplay from '../../EquationDisplay/components/EquationDisplayView'
 import Button from '../../Button/components/ButtonView'
 
-// const buttons = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'AC', 'CE', '/', '*', '-', '+', '=', '.']
 const buttons = ['AC', 'CE', '/', '*', 7, 8, 9, '-', 4, 5, 6, '+', 1, 2, 3, 0, '.', '=']
 
 export const Calculator = (props) => (
   <div id='calculator'>
-    <h3 className='title'>Electronic Calculator</h3>
-      <EquationDisplay />
+    <h3 className='title'>React-Redux Electronic Calculator</h3>
+      <EquationDisplay userInput={props.userInput} equation={props.equation} />
       {buttons.map((button) => {
-        return <Button key={button} button={button} />
+        return <Button key={button} button={button} buttonClick={props.buttonClick} />
       })}
   </div>
 )

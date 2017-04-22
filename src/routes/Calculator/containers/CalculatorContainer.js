@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { buttonClick } from '../modules/calculator'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -12,11 +13,12 @@ import CalculatorView from '../components/CalculatorView'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-
+  buttonClick
 }
 
 const mapStateToProps = (state) => ({
-
+  userInput: state.calculator.userInput,
+  equation: state.calculator.equation
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
