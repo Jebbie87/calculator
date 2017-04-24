@@ -9,7 +9,6 @@ export default class Button extends Component {
     // if CE is clicked, clear the last input and set userInput back to 0
 
     this.props.buttonClick(e.target.value)
-
   }
 
   render() {
