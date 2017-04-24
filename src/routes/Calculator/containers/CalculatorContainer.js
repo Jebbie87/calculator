@@ -18,7 +18,10 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   userInput: state.calculator.userInput,
-  equation: state.calculator.equation
+  firstInput: state.calculator.firstInput,
+  operator: state.calculator.operator,
+  secondInput: state.calculator.secondInput,
+  equation: state.calculator.equation,
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

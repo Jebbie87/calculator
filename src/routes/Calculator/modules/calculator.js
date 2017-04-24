@@ -25,31 +25,64 @@ const ACTION_HANDLERS = {
     switch(payload) {
       case 'AC':
         console.log('ac')
-        return {state, userInput: 0, equation: 0}
+        return {
+          ...state,
+          userInput: 0,
+          firstInput: 0,
+          operator: null,
+          secondInput: 0
+        }
       case 'CE':
         console.log('ce')
         return {...state, userInput: 0}
       case '0':
         console.log('0')
         // will not add 0 if user has not put in anything
-        if (state.equation === 0) return state
+        if (state.firstInput === 0) return state
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        return {...state, userInput: payload, operator: payload}
       case '=':
         console.log('=')
-        let checkSecondEqualPress = eval(state.equation.split('=')[0])
-
-        if (parseFloat(state.userInput) === checkSecondEqualPress) {
-          console.log('second equal')
-          return state
+        switch(state.operator) {
+          case '+':
+            return {
+              ...state,
+              userInput: `${parseFloat(state.firstInput) + parseFloat(state.secondInput)}`,
+              equation: `${parseFloat(state.firstInput) + parseFloat(state.secondInput)}`
+            }
+          case '-':
+            return {
+              ...state,
+              userInput: `${parseFloat(state.firstInput) - parseFloat(state.secondInput)}`,
+              equation: `${parseFloat(state.firstInput) - parseFloat(state.secondInput)}`
+            }
+          case '*':
+            return {
+              ...state,
+              userInput: `${parseFloat(state.firstInput) * parseFloat(state.secondInput)}`,
+              equation: `${parseFloat(state.firstInput) * parseFloat(state.secondInput)}`
+            }
+          case '/':
+            return {
+              ...state,
+              userInput: `${parseFloat(state.firstInput) / parseFloat(state.secondInput)}`,
+              equation: `${parseFloat(state.firstInput) / parseFloat(state.secondInput)}`
+            }
         }
-
-        return {state, userInput: eval(state.equation), equation: `${state.equation}=${eval(state.equation)}`}
       default:
         console.log('default')
-        if (state.equation === 0) {
-          return {state, userInput: payload, equation: payload}
+        if (state.firstInput === 0) {
+          return {...state, userInput: payload, firstInput: payload}
+        } else if (state.operator && state.secondInput) {
+          return {...state, userInput: payload, secondInput: state.secondInput + payload}
+        } else if (state.operator) {
+          return {...state, userInput: payload, secondInput: payload}
+        } else {
+          return {...state, userInput: payload, firstInput: state.firstInput + payload}
         }
-
-        return {state, userInput: payload, equation: state.equation + payload}
     }
   },
 }
@@ -59,7 +92,10 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   userInput: 0,
-  equation: 0
+  firstInput: 0,
+  operator: null,
+  secondInput: null,
+  equation: null,
 }
 
 const counterReducer = (state = initialState, action) => {
