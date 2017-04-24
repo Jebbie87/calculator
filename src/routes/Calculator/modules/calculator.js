@@ -37,12 +37,14 @@ const ACTION_HANDLERS = {
         return {...state, userInput: 0}
       case '0':
         console.log('0')
-        // will not add 0 if user has not put in anything
         if (state.firstInput === 0) return state
       case '+':
       case '-':
       case '*':
       case '/':
+        if (state.equation) {
+          return {...state, userInput: payload, firstInput: state.equation, operator: payload, secondInput: null, equation: null}
+        }
         return {...state, userInput: payload, operator: payload}
       case '=':
         console.log('=')
@@ -74,7 +76,9 @@ const ACTION_HANDLERS = {
         }
       default:
         console.log('default')
-        if (state.firstInput === 0) {
+        if (state.equation) {
+          return {...state, userInput: payload, firstInput: state.equation, secondInput: null, equation: null}
+        } else if (state.firstInput === 0) {
           return {...state, userInput: payload, firstInput: payload}
         } else if (state.operator && state.secondInput) {
           return {...state, userInput: payload, secondInput: state.secondInput + payload}
