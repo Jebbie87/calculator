@@ -24,30 +24,28 @@ const ACTION_HANDLERS = {
   [BUTTON_CLICKED] : (state, { payload }) => {
     switch(payload) {
       case 'AC':
-        console.log('ac')
-        return {
-          ...state,
-          userInput: 0,
-          firstInput: 0,
-          operator: null,
-          secondInput: 0
-        }
+        return initialState
       case 'CE':
-        console.log('ce')
-        return {...state, userInput: 0}
+        if (state.equation) {
+          return initialState
+        } else if (state.secondInput) {
+          return {...state, userInput: 0, secondInput: 0}
+        } else if (state.operator) {
+          return {...state, userInput: 0, operator: null}
+        } else {
+          return {...state, userInput: 0, firstInput: 0}
+        }
       case '0':
-        console.log('0')
         if (state.firstInput === 0) return state
       case '+':
       case '-':
       case '*':
       case '/':
         if (state.equation) {
-          return {...state, userInput: payload, firstInput: state.equation, operator: payload, secondInput: null, equation: null}
+          return {...state, userInput: payload, firstInput: state.equation, operator: payload, secondInput: 0, equation: null}
         }
         return {...state, userInput: payload, operator: payload}
       case '=':
-        console.log('=')
         switch(state.operator) {
           case '+':
             return {
@@ -73,19 +71,35 @@ const ACTION_HANDLERS = {
               userInput: `${parseFloat(state.firstInput) / parseFloat(state.secondInput)}`,
               equation: `${parseFloat(state.firstInput) / parseFloat(state.secondInput)}`
             }
+          default:
+            return {
+              ...state,
+              equation: state.firstInput
+            }
+        }
+      case '.':
+        if (state.firstInput === 0) {
+          return {...state, userInput: 0 + payload, firstInput: state.firstInput + payload}
+        } else if (!state.operator && state.firstInput.indexOf('.') === -1) {
+          return {...state, userInput: state.userInput + payload, firstInput: state.firstInput + payload}
+        } else if (state.secondInput === 0) {
+          return {...state, userInput: 0 + payload, secondInput: state.secondInput + payload}
+        } else if (state.secondInput.indexOf('.') === -1) {
+          return {...state, userInput: state.userInput + payload, secondInput: state.secondInput + payload}
+        } else {
+          return state
         }
       default:
-        console.log('default')
         if (state.equation) {
-          return {...state, userInput: payload, firstInput: state.equation, secondInput: null, equation: null}
+          return {...state, userInput: payload, firstInput: payload, operator: null, secondInput: 0, equation: null}
         } else if (state.firstInput === 0) {
           return {...state, userInput: payload, firstInput: payload}
         } else if (state.operator && state.secondInput) {
-          return {...state, userInput: payload, secondInput: state.secondInput + payload}
+          return {...state, userInput: state.userInput + payload, secondInput: state.secondInput + payload}
         } else if (state.operator) {
           return {...state, userInput: payload, secondInput: payload}
         } else {
-          return {...state, userInput: payload, firstInput: state.firstInput + payload}
+          return {...state, userInput: state.userInput + payload, firstInput: state.firstInput + payload}
         }
     }
   },
@@ -98,7 +112,7 @@ const initialState = {
   userInput: 0,
   firstInput: 0,
   operator: null,
-  secondInput: null,
+  secondInput: 0,
   equation: null,
 }
 
